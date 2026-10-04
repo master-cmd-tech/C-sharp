@@ -1,0 +1,15 @@
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.AssemblyInfoInputs.cache
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.AssemblyInfo.cs
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.csproj.CoreCompileInputs.cache
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.sourcelink.json
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\bin\Debug\net10.0\lesson6.exe
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\bin\Debug\net10.0\lesson6.deps.json
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\bin\Debug\net10.0\lesson6.runtimeconfig.json
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\bin\Debug\net10.0\lesson6.dll
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\bin\Debug\net10.0\lesson6.pdb
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.dll
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\refint\lesson6.dll
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.pdb
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\lesson6.genruntimeconfig.cache
+C:\Users\Master\VisualStudioCode\functional-programming\lesson6\obj\Debug\net10.0\ref\lesson6.dll
