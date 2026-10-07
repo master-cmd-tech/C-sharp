@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "Alice",
+    "CheckInTime": "2026-10-04T10:00:00"
+  },
+  {
+    "Name": "Bob",
+    "CheckInTime": "2026-10-04T10:05:00"
+  },
+  {
+    "Name": "Charlie",
+    "CheckInTime": "2026-10-04T10:10:00"
+  },
+  {
+    "Name": "David",
+    "CheckInTime": "2026-10-04T10:15:00"
+  }
+]
