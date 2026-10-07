@@ -2,44 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public record Book : IComparable<Book>
+record Book : IComparable<Book>
 {
     public string Title { get; init; }
     public string Isbn { get; init; }
     public decimal Price { get; init; }
     public int StockCount { get; private init; }
 
-    public override bool Equals(object? obj)
+    public Book(string title, string isbn, decimal price, int stockCount)
     {
-        if (obj is Book other)
-        {
-            return Isbn == other.Isbn;
-        }
-
-        return false;
-    }
-
-    public override int GetHashCode()
-    {
-        return Isbn.GetHashCode();
+        Title = title;
+        Isbn = isbn;
+        Price = price;
+        StockCount = stockCount;
     }
 
     public int CompareTo(Book? other)
     {
-        if (other == null)
-        {
-            return 1;
-        }
-
-        return Price.CompareTo(other.Price);
+        return Price.CompareTo(other?.Price);
     }
 
     public Book Restock(int quantity)
     {
         if (quantity <= 0)
-        {
             throw new ArgumentException("Quantity must be positive.");
-        }
 
         return this with
         {
@@ -50,19 +36,30 @@ public record Book : IComparable<Book>
     public Book Sell(int quantity)
     {
         if (quantity <= 0)
-        {
             throw new ArgumentException("Quantity must be positive.");
-        }
 
         if (quantity > StockCount)
-        {
             throw new InvalidOperationException("Not enough stock.");
-        }
 
         return this with
         {
             StockCount = StockCount - quantity
         };
+    }
+
+    public virtual bool Equals(Book? other)
+    {
+        return other != null && Isbn == other.Isbn;
+    }
+
+    public override int GetHashCode()
+    {
+        return Isbn.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        return $"{Title} - ${Price} - Stock: {StockCount}";
     }
 }
 
@@ -72,132 +69,75 @@ class Program
     {
         List<Book> catalog = new()
         {
-            new Book
-            {
-                Title = "Refactoring",
-                Isbn = "111",
-                Price = 45.00m,
-                StockCount = 4
-            },
-
-            new Book
-            {
-                Title = "Clean Code",
-                Isbn = "222",
-                Price = 35.50m,
-                StockCount = 2
-            },
-
-            new Book
-            {
-                Title = "The Pragmatic Programmer",
-                Isbn = "333",
-                Price = 40.00m,
-                StockCount = 6
-            }
+            new Book("Refactoring", "111", 45.00m, 4),
+            new Book("Clean Code", "222", 35.50m, 2),
+            new Book("The Pragmatic Programmer", "333", 40.00m, 6)
         };
 
-        // 1. Print sorted catalogue
-        Console.WriteLine("1. Sorted catalogue:");
+        List<Book> sorted = new(catalog);
+        sorted.Sort();
 
-        List<Book> sortedCatalog = new List<Book>(catalog);
-        sortedCatalog.Sort();
+        Console.WriteLine("SORTED:");
+        foreach (Book b in sorted)
+            Console.WriteLine(b);
 
-        foreach (Book book in sortedCatalog)
-        {
-            Console.WriteLine(
-                $"{book.Title} - ${book.Price:F2} - Stock: {book.StockCount}"
-            );
-        }
+        List<Book> copy = new(sorted);
 
-        // 2. Create a copy and add a duplicate ISBN
-        Console.WriteLine("\n2. Duplicate ISBN test:");
-
-        List<Book> copy = new List<Book>(sortedCatalog);
-
-        Book duplicate = new Book
-        {
-            Title = "Another Refactoring",
-            Isbn = "111",
-            Price = 100.00m,
-            StockCount = 20
-        };
+        Book duplicate = new(
+            "Another Refactoring",
+            "111",
+            99.99m,
+            100
+        );
 
         copy.Add(duplicate);
 
-        Console.WriteLine($"Copy count after adding duplicate: {copy.Count}");
+        Console.WriteLine();
+        Console.WriteLine("COUNT:");
+        Console.WriteLine($"Before: {copy.Count}");
 
-        // Check equality
-        Book original = catalog[0];
-
-        Console.WriteLine(
-            $"original.Equals(duplicate): {original.Equals(duplicate)}"
-        );
-
-        Console.WriteLine(
-            $"ReferenceEquals(original, duplicate): {ReferenceEquals(original, duplicate)}"
-        );
-
-        // 3. Wrong solution using Equals
-        Console.WriteLine("\n3. Removing duplicate using Equals:");
-
-        var withoutDuplicate = copy
-            .Where(book => !book.Equals(duplicate))
+        var equalsResult = copy
+            .Where(b => !b.Equals(duplicate))
             .ToList();
 
-        Console.WriteLine(
-            $"Count after Equals filter: {withoutDuplicate.Count}"
-        );
+        Console.WriteLine($"After Equals: {equalsResult.Count}");
 
-        Console.WriteLine(
-            "Both ISBN 111 books are removed because they are equal by ISBN."
-        );
-
-        // 4. Correct solution using ReferenceEquals
-        Console.WriteLine("\n4. Removing exact duplicate using ReferenceEquals:");
-
-        var fixedList = copy
-            .Where(book => !ReferenceEquals(book, duplicate))
+        var referenceResult = copy
+            .Where(b => !ReferenceEquals(b, duplicate))
             .ToList();
 
-        Console.WriteLine($"Count after ReferenceEquals filter: {fixedList.Count}");
+        Console.WriteLine($"After ReferenceEquals: {referenceResult.Count}");
 
-        Console.WriteLine(
-            $"Original Refactoring price: ${original.Price:F2}"
-        );
+        Book book = catalog[0];
 
-        Console.WriteLine(
-            $"Original Refactoring stock: {original.StockCount}"
-        );
+        Console.WriteLine();
+        Console.WriteLine("RESTOCK:");
 
-        // 5. Restock
-        Console.WriteLine("\n5. Restock:");
+        Console.WriteLine($"Before: {book.StockCount}");
 
-        Book restockedBook = original.Restock(3);
+        book = book.Restock(5);
 
-        Console.WriteLine($"Before restock: {original.StockCount}");
-        Console.WriteLine($"After restock: {restockedBook.StockCount}");
-        Console.WriteLine($"Original book: {original.StockCount}");
+        Console.WriteLine($"After: {book.StockCount}");
 
-        // 6. Sell
-        Console.WriteLine("\n6. Sell:");
+        Console.WriteLine();
+        Console.WriteLine("SELL:");
 
-        Book soldBook = restockedBook.Sell(2);
+        Console.WriteLine($"Before: {book.StockCount}");
 
-        Console.WriteLine($"Before sale: {restockedBook.StockCount}");
-        Console.WriteLine($"After sale: {soldBook.StockCount}");
-        Console.WriteLine($"Original book: {original.StockCount}");
+        book = book.Sell(2);
 
-        // 7. Oversell
-        Console.WriteLine("\n7. Oversell test:");
+        Console.WriteLine($"After: {book.StockCount}");
+
+        Console.WriteLine();
+        Console.WriteLine("OVERSELL:");
 
         try
         {
-            soldBook.Sell(10);
+            book = book.Sell(100);
         }
         catch (InvalidOperationException ex)
         {
-            Console.WriteLine($"Sale rejected: {ex.Message}");
+            Console.WriteLine($"Rejected: {ex.Message}");
         }
     }
 }

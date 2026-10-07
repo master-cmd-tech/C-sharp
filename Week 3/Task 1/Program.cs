@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 public record Book
 {
     public string Title { get; init; }
@@ -8,14 +7,43 @@ public record Book
     public decimal Price { get; init; }
     public int StockCount { get; private init; }
 
-    public override bool Equals(object? obj)
+    public Book(string title, string isbn, decimal price, int stockCount)
     {
-        if (obj is Book other)
-        {
-            return Isbn == other.Isbn;
-        }
+        Title = title;
+        Isbn = isbn;
+        Price = price;
+        StockCount = stockCount;
+    }
 
-        return false;
+    public Book Restock(int amount)
+    {
+        return new Book(
+            Title,
+            Isbn,
+            Price,
+            StockCount + amount
+        );
+    }
+
+    public Book Sell()
+    {
+        if (StockCount <= 0)
+            return this;
+
+        return new Book(
+            Title,
+            Isbn,
+            Price,
+            StockCount - 1
+        );
+    }
+
+    public virtual bool Equals(Book? other)
+    {
+        if (other is null)
+            return false;
+
+        return Isbn == other.Isbn;
     }
 
     public override int GetHashCode()
@@ -28,64 +56,46 @@ class Program
 {
     static void Main()
     {
-        List<Book> catalog = new()
-        {
-            new Book
-            {
-                Title = "Refactoring",
-                Isbn = "111",
-                Price = 45.00m,
-                StockCount = 4
-            },
+        Book book1 = new Book(
+            "Refactoring",
+            "111",
+            45.00m,
+            4
+        );
 
-            new Book
-            {
-                Title = "Clean Code",
-                Isbn = "222",
-                Price = 35.50m,
-                StockCount = 2
-            },
+        Book book2 = new Book(
+            "Refactoring",
+            "111",
+            50.00m,
+            10
+        );
 
-            new Book
-            {
-                Title = "The Pragmatic Programmer",
-                Isbn = "333",
-                Price = 40.00m,
-                StockCount = 6
-            }
-        };
+        Book book3 = new Book(
+            "Clean Code",
+            "222",
+            35.50m,
+            2
+        );
 
-        Book featured = catalog[0];
+
+        Book featured = book1;
         Book display = featured;
 
-        Console.WriteLine("Before change:");
-        Console.WriteLine($"Featured stock: {featured.StockCount}");
+        Console.WriteLine("Shared reference:");
+        Console.WriteLine(featured.StockCount);
 
 
-        Console.WriteLine("\nShared reference demonstration:");
-        Console.WriteLine($"featured and display refer to the same object: {ReferenceEquals(featured, display)}");
+        Book changed = display.Sell();
 
-        Book sameIsbn = new Book
-        {
-            Title = "Another Refactoring",
-            Isbn = "111",
-            Price = 50.00m,
-            StockCount = 10
-        };
+        Console.WriteLine();
+        Console.WriteLine("Immutable update:");
+        Console.WriteLine($"Original stock: {book1.StockCount}");
+        Console.WriteLine($"New stock: {changed.StockCount}");
 
-        Book differentIsbn = new Book
-        {
-            Title = "Another Book",
-            Isbn = "999",
-            Price = 50.00m,
-            StockCount = 10
-        };
+        Console.WriteLine();
+        Console.WriteLine("Equality:");
 
-        Console.WriteLine("\nEquality tests:");
-        Console.WriteLine($"Same ISBN: {featured.Equals(sameIsbn)}");
-        Console.WriteLine($"Different ISBN: {featured.Equals(differentIsbn)}");
-
-        Console.WriteLine("\nBook information:");
-        Console.WriteLine($"{featured.Title}, ISBN: {featured.Isbn}, Price: {featured.Price}, Stock: {featured.StockCount}");
+        Console.WriteLine(book1 == book2);
+        Console.WriteLine(book1 == book3);
     }
 }
