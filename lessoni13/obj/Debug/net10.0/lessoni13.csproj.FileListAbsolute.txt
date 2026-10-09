@@ -1,0 +1,15 @@
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\bin\Debug\net10.0\lessoni13.exe
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\bin\Debug\net10.0\lessoni13.deps.json
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\bin\Debug\net10.0\lessoni13.runtimeconfig.json
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\bin\Debug\net10.0\lessoni13.dll
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\bin\Debug\net10.0\lessoni13.pdb
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.AssemblyInfoInputs.cache
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.AssemblyInfo.cs
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.csproj.CoreCompileInputs.cache
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.sourcelink.json
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.dll
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\refint\lessoni13.dll
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.pdb
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\lessoni13.genruntimeconfig.cache
+C:\Users\Master\VisualStudioCode\functional-programming\lessoni13\obj\Debug\net10.0\ref\lessoni13.dll
